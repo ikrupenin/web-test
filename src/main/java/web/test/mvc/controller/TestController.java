@@ -11,7 +11,7 @@ public class TestController {
 
     @RequestMapping("/spring.html")
     public String test() {
-        return "next";
+        return "Here is API";
     }
 
 }
