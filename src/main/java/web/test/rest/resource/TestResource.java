@@ -13,7 +13,7 @@ public class TestResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String count() {
+    public String rest() {
         return "This is REST";
     }
 
