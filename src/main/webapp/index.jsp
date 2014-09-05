@@ -5,10 +5,10 @@
         <title>WEB Test</title>
     </head>
     <body>
-        Hello WEB
+        Hello Вовчик, Вот я МОЛОДЕЦ.
         <p>
         <form action="spring.html" method="GET">
-            <input type="submit" value=">"/>
+            <input type="submit" value="Нажми"/>
         </form>
     </body>
 </html>
