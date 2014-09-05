@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <html>
     <head>
-        <title>WEB Test</title>
+        <title>From Ihar</title>
     </head>
     <body>
         Hello Vovchik, I am the BEST.
