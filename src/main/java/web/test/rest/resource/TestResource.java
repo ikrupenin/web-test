@@ -1,5 +1,6 @@
 package web.test.rest.resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,14 +58,16 @@ public class TestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(@PathParam("id") Long id,
                            @FormParam("name") String name, @FormParam("date") String dateParam) {
-        Date date;
-        try {
-            date = FORMATTER.parse(dateParam);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Illegal 'date' parameter. Should have format 'MM/dd/yyyy'");
+        Date date = null;
+        if (StringUtils.isNotBlank(dateParam)) {
+            try {
+                date = FORMATTER.parse(dateParam);
+            } catch (ParseException e) {
+                throw new BadRequestException("Illegal 'date' parameter. Should have format 'MM/dd/yyyy'");
+            }
         }
         if (service.get(id) != null) {
-            throw new IllegalArgumentException("Entity already exists: id=" + id);
+            throw new BadRequestException("Entity already exists: id=" + id);
         }
         Test test = new Test(id, name, date);
         service.save(test);
@@ -76,15 +79,17 @@ public class TestResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@PathParam("id") Long id,
                            @FormParam("name") String name, @FormParam("date") String dateParam) {
-        Date date;
-        try {
-            date = FORMATTER.parse(dateParam);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Illegal 'date' parameter. Should have format 'MM/dd/yyyy'");
+        Date date = null;
+        if (StringUtils.isNotBlank(dateParam)) {
+            try {
+                date = FORMATTER.parse(dateParam);
+            } catch (ParseException e) {
+                throw new BadRequestException("Illegal 'date' parameter. Should have format 'MM/dd/yyyy'");
+            }
         }
         Test test = service.get(id);
         if (test == null) {
-            throw new IllegalArgumentException("Entity doesn't exist: id=" + id);
+            throw new BadRequestException("Entity doesn't exist: id=" + id);
         }
         test.setName(name);
         test.setDate(date);

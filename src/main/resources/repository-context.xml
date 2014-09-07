@@ -13,15 +13,15 @@
     </bean>
 
     <bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
-        <property name="username" value="#{mongoURI.username}"/>
-        <property name="password" value="#{new java.lang.String(mongoURI.password)}"/>
+        <constructor-arg index="0" value="#{@mongoURI.getUsername()}"/>
+        <constructor-arg index="1" value="#{new java.lang.String(@mongoURI.getPassword())}"/>
     </bean>
 
     <bean class="com.mongodb.Mongo" id="mongo">
         <constructor-arg ref="mongoURI"/>
     </bean>
 
-    <mongo:db-factory id="mongoDbFactory" dbname="test" mongo-ref="mongo"/>
+    <mongo:db-factory id="mongoDbFactory" dbname="#{@mongoURI.getDatabase()}" mongo-ref="mongo"/>
     <mongo:repositories base-package="web.test.repository"/>
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">

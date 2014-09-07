@@ -6,11 +6,6 @@
 
     <display-name>WEB Test</display-name>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/jsp/error/404.jsp</location>
-    </error-page>
-
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
