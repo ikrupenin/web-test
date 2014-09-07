@@ -47,7 +47,7 @@ public class TestResource {
     public Response get(@PathParam("id") Long id) {
         Test test = service.get(id);
         if (test == null) {
-            throw new NotFoundException("Test not found: id=" + id);
+            throw new NotFoundException("Entity not found: id=" + id);
         }
         return Response.ok().entity(test).build();
     }
