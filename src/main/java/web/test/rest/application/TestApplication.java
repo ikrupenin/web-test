@@ -10,5 +10,6 @@ public class TestApplication extends ResourceConfig {
 
     public TestApplication() {
         register(TestResource.class);
+        register(ObjectMapperResolver.class);
     }
 }
