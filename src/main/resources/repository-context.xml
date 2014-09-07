@@ -1,11 +1,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Mongo DB Configuration -->
-    <mongo:mongo id="mongo" host="127.0.0.1" port="27017"/>
+    <context:property-placeholder/>
+
+    <bean id="mongoURI" class="com.mongodb.MongoURI">
+        <constructor-arg value="${MONGOHQ_URL}"/>
+    </bean>
+
+    <bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
+        <property name="username" value="#{mongoURI.username}"/>
+        <property name="password" value="#{new java.lang.String(mongoURI.password)}"/>
+    </bean>
+
+    <bean class="com.mongodb.Mongo" id="mongo">
+        <constructor-arg ref="mongoURI"/>
+    </bean>
+
     <mongo:db-factory id="mongoDbFactory" dbname="test" mongo-ref="mongo"/>
     <mongo:repositories base-package="web.test.repository"/>
 

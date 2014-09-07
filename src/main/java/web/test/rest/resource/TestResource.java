@@ -3,7 +3,7 @@ package web.test.rest.resource;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import web.test.domain.Test;
 import web.test.service.TestService;
 
@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by PC on 05.09.14.
@@ -33,7 +34,11 @@ public class TestResource {
     @Path("test")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
-        return Response.ok().entity(service.getAll()).build();
+        List<Test> tests = service.getAll();
+        if (CollectionUtils.isEmpty(tests)) {
+            throw new NotFoundException("Entities not found");
+        }
+        return Response.ok().entity(tests).build();
     }
 
     @GET
